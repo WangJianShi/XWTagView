@@ -8,7 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 #import "XWTagMaker.h"
+@class XWTagView;
+@protocol XWTagViewDelegate;
+
+@interface XWTagWeakObject : NSObject
+
+@property (nullable, nonatomic, weak) id<XWTagViewDelegate> delegate;
+
+@property (nullable, nonatomic, weak) XWTagView *tagView;
+
+@end
 
 @interface NSMutableAttributedString (XWTagView)
 

@@ -31,6 +31,7 @@
 		7F12075C21A650EA00A251D1 /* UIView+YYText.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F12074121A650EA00A251D1 /* UIView+YYText.m */; };
 		7F12075D21A650EA00A251D1 /* YYTextAsyncLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F12074421A650EA00A251D1 /* YYTextAsyncLayer.m */; };
 		7F12075E21A650EA00A251D1 /* YYTextWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F12074521A650EA00A251D1 /* YYTextWeakProxy.m */; };
+		7F12076121A698D600A251D1 /* XWTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F12076021A698D600A251D1 /* XWTagViewController.m */; };
 		7F8191A3204D827400FCA686 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8191A2204D827400FCA686 /* AppDelegate.m */; };
 		7F8191A6204D827400FCA686 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8191A5204D827400FCA686 /* ViewController.m */; };
 		7F8191A9204D827400FCA686 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F8191A7204D827400FCA686 /* Main.storyboard */; };
@@ -111,6 +112,8 @@
 		7F12074421A650EA00A251D1 /* YYTextAsyncLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextAsyncLayer.m; sourceTree = "<group>"; };
 		7F12074521A650EA00A251D1 /* YYTextWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextWeakProxy.m; sourceTree = "<group>"; };
 		7F12074621A650EA00A251D1 /* UIPasteboard+YYText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIPasteboard+YYText.h"; sourceTree = "<group>"; };
+		7F12075F21A698D600A251D1 /* XWTagViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XWTagViewController.h; sourceTree = "<group>"; };
+		7F12076021A698D600A251D1 /* XWTagViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XWTagViewController.m; sourceTree = "<group>"; };
 		7F81919E204D827400FCA686 /* AsynTagView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsynTagView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F8191A1204D827400FCA686 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7F8191A2204D827400FCA686 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				7F8191A2204D827400FCA686 /* AppDelegate.m */,
 				7F8191A4204D827400FCA686 /* ViewController.h */,
 				7F8191A5204D827400FCA686 /* ViewController.m */,
+				7F12075F21A698D600A251D1 /* XWTagViewController.h */,
+				7F12076021A698D600A251D1 /* XWTagViewController.m */,
 				7F8191A7204D827400FCA686 /* Main.storyboard */,
 				7F8191AA204D827400FCA686 /* Assets.xcassets */,
 				7F8191AC204D827400FCA686 /* LaunchScreen.storyboard */,
@@ -467,6 +472,7 @@
 				7F8191DA204D828100FCA686 /* NSMutableAttributedString+XWTagView.m in Sources */,
 				7F12075221A650EA00A251D1 /* YYTextRunDelegate.m in Sources */,
 				7F8191DB204D828100FCA686 /* XWTagMaker.m in Sources */,
+				7F12076121A698D600A251D1 /* XWTagViewController.m in Sources */,
 				7F12075121A650EA00A251D1 /* YYLabel.m in Sources */,
 				7F12074F21A650EA00A251D1 /* YYTextKeyboardManager.m in Sources */,
 				7F12074B21A650EA00A251D1 /* YYTextInput.m in Sources */,

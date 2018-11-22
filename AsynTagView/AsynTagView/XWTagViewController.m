@@ -1,27 +1,26 @@
 //
-//  ViewController.m
+//  XWTagViewController.m
 //  AsynTagView
 //
-//  Created by 王剑石 on 2018/3/5.
-//  Copyright © 2018年 wangjianshi. All rights reserved.
+//  Created by 王剑石 on 2018/11/22.
+//  Copyright © 2018 wangjianshi. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "XWTagView.h"
 #import "XWTagViewController.h"
+#import "XWTagView.h"
 
-@interface ViewController ()<XWTagViewDelegate>
+@interface XWTagViewController ()<XWTagViewDelegate>
 
 @property (nonatomic, strong) XWTagView *tagView;
 
 @end
 
-@implementation ViewController
+@implementation XWTagViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUI];
-
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -31,9 +30,9 @@
     [self.view addSubview:self.tagView];
     
     NSArray<NSString *> *tags = @[
-                                   @"标签tag1标签tag1标签tag1标签tag1",@"表面",@"哈哈哈",@"测试测试",@"不不",@"无敌啊",@"标签",@"这样喊得好吗",
-                                   @"哈哈哈",@"嘻嘻嘻",@"呵呵呵",@"标签",@"表面兄弟",@"你好啊",@"不想你了哦",@"不要这样子啦"
-                                   ];
+                                  @"标签tag1标签tag1标签tag1标签tag1",@"表面",@"哈哈哈",@"测试测试",@"不不",@"无敌啊",@"标签",@"这样喊得好吗",
+                                  @"哈哈哈",@"嘻嘻嘻",@"呵呵呵",@"标签",@"表面兄弟",@"你好啊",@"不想你了哦",@"不要这样子啦"
+                                  ];
     
     NSMutableAttributedString *attr = [NSMutableAttributedString xw_makeTagView: tags tagMaker:^(XWTagMaker *make){
         
@@ -57,8 +56,7 @@
 
 -(void)tagView:(XWTagView *)view didSelectTagAtIndex:(NSInteger)index{
     
-    NSLog(@"我被点击了啊------%ld",index);
-    [self presentViewController:[[XWTagViewController alloc]init] animated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(XWTagView *)tagView{
@@ -69,6 +67,11 @@
         _tagView.delegate = self;
     }
     return _tagView;
+}
+
+-(void)dealloc{
+    
+    NSLog(@"XWTagViewController---dealloc");
 }
 
 

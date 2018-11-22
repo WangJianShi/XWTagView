@@ -46,8 +46,28 @@
     
     self.attributedText = _tagAttr;
 
+    [self setUpAttrDelegate];
+}
+
+-(void)setDelegate:(id<XWTagViewDelegate>)delegate{
     
+    if (_delegate != delegate) {
+        
+        _delegate = delegate;
+        [self setUpAttrDelegate];
+    }
+}
+
+-(void)setUpAttrDelegate{
     
+    if (_delegate && _tagAttr) {
+        
+        XWTagWeakObject *obj = [[XWTagWeakObject alloc] init];
+        obj.delegate = _delegate;
+        obj.tagView = self;
+        [_tagAttr setValue:obj forKey:@"delegate"];
+
+    }
 }
 
 

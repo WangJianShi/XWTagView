@@ -8,8 +8,17 @@
 
 #import "YYText.h"
 #import "NSMutableAttributedString+XWTagView.h"
+@class XWTagView;
+
+@protocol XWTagViewDelegate <NSObject>
+
+-(void)tagView:(XWTagView *)view didSelectTagAtIndex:(NSInteger)index;
+
+@end
 
 @interface XWTagView : YYLabel
+
+@property (nonatomic, weak) id<XWTagViewDelegate> delegate;
 
 /**
  *NSMutableAttributedString
