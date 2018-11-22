@@ -2,12 +2,13 @@
 //  NSMutableAttributedString+XWTagView.m
 //  XWTagView
 //
-//  Created by serein on 2017/10/27.
+//  Created by 王剑石 on 2017/10/27.
 //  Copyright © 2017年 wangjianshi. All rights reserved.
 //
 
 #import "NSMutableAttributedString+XWTagView.h"
 #import <objc/runtime.h>
+#import "YYText.h"
 
 @implementation NSMutableAttributedString (XWTagView)
 
@@ -20,5 +21,121 @@
     NSNumber * width = [NSNumber numberWithFloat:tagHeight];
     objc_setAssociatedObject(self, @selector(tagHeight), width, OBJC_ASSOCIATION_RETAIN);
 }
+
++(NSMutableAttributedString *)xw_makeTagView:(NSArray<NSString *> *)tags  tagMaker:(void (^)(XWTagMaker *))maskBlock{
+    
+    NSMutableAttributedString *text = [NSMutableAttributedString new];
+    NSInteger height = 0;
+    XWTagMaker *maker = [[XWTagMaker alloc] init];
+    if (maskBlock) {
+        maskBlock(maker);
+    }
+    
+    for (int i = 0; i < tags.count; i++) {
+        NSString *tag = tags[i];
+        NSMutableAttributedString *tagText = [[NSMutableAttributedString alloc] init];
+        //左右间距
+        if (maker.tagAlignment == XWTagAlignmentRight)
+        {
+            [tagText appendAttributedString:[self creatEmptyAttributeString:maker.space]];
+        }
+        //标签左内边距
+        [tagText appendAttributedString:[self creatEmptyAttributeString:fabs(maker.insets.left)]];
+        //标签内容
+        [tagText yy_appendString:tag];
+        //标签右内边距
+        [tagText appendAttributedString:[self creatEmptyAttributeString:fabs(maker.insets.right)]];
+        //左右间距
+        if (maker.tagAlignment != XWTagAlignmentRight)
+        {
+            [tagText appendAttributedString:[self creatEmptyAttributeString:maker.space]];
+        }
+        //标签字体颜色设置
+        tagText.yy_font = maker.font;
+        tagText.yy_color = maker.textColor;
+        [tagText yy_setTextBinding:[YYTextBinding bindingWithDeleteConfirm:NO] range:tagText.yy_rangeOfAll];
+        //设置item外观样式
+        NSRange tagRange = [tagText.string rangeOfString:tag];
+        [tagText yy_setTextBackgroundBorder:[self creatTextBoard:maker] range:NSMakeRange(tagRange.location - 1, tagRange.length + 2)];
+        //行间距等设置
+        [text appendAttributedString:tagText];
+        text.yy_lineSpacing = maker.lineSpace;
+        text.yy_lineBreakMode = NSLineBreakByWordWrapping;
+        //高度计算（超最大范围加换行符手动换行）
+        YYTextContainer  *tagContarer = [YYTextContainer new];
+        tagContarer.size = CGSizeMake(maker.maxWidth - 3,CGFLOAT_MAX);
+        YYTextLayout *tagLayout = [YYTextLayout layoutWithContainer:tagContarer text:text];
+        if (tagLayout.textBoundingSize.height > height) {
+            if (height != 0) {
+                [text yy_insertString:@"\n" atIndex:text.length - tagText.length];
+            }
+            tagLayout = [YYTextLayout layoutWithContainer:tagContarer text:text];
+            height = tagLayout.textBoundingSize.height;
+        }
+    }
+    
+    //高度记录（富文本已扩展高度属性）
+    text.tagHeight = height + maker.lineSpace;
+    //对齐方向设置（头尾自动缩进1.5）
+    [text addAttribute:NSParagraphStyleAttributeName value:[self creatTextStyle:maker]
+                 range:NSMakeRange(0, text.length)];
+    
+    
+    return text;
+}
+
+
+/**
+ 外观样式
+ 
+ @param maker tag外观配置
+ @return 返回YYTextBorder
+ */
++(YYTextBorder *)creatTextBoard:(XWTagMaker *)maker{
+    
+    YYTextBorder *border = [YYTextBorder new];
+    border.strokeWidth = maker.strokeWidth;
+    border.strokeColor = maker.strokeColor;
+    border.fillColor = maker.fillColor;
+    border.cornerRadius = maker.cornerRadius; // a huge value
+    border.lineJoin = maker.lineJoin;
+    border.insets = UIEdgeInsetsMake(maker.insets.top, 0, maker.insets.bottom, 0);
+    
+    return border;
+}
+
++(NSMutableAttributedString *)creatEmptyAttributeString:(CGFloat)width{
+    
+    NSMutableAttributedString *spaceText = [NSMutableAttributedString yy_attachmentStringWithContent:[[UIImage alloc]init] contentMode:UIViewContentModeScaleToFill attachmentSize:CGSizeMake(width, 1) alignToFont:[UIFont systemFontOfSize:0] alignment:YYTextVerticalAlignmentCenter];
+    
+    return spaceText;
+    
+}
+
++(NSMutableParagraphStyle *)creatTextStyle:(XWTagMaker *)maker{
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineSpacing =  maker.lineSpace;
+    style.firstLineHeadIndent = 1.5;
+    style.headIndent = 1.5 ;//设置与首部的距离
+    style.tailIndent = maker.tagAlignment == NSTextAlignmentRight ? maker.maxWidth - fabs(maker.insets.right) : maker.maxWidth - 1.5; //设置与尾部的距离
+    switch (maker.tagAlignment) {
+        case XWTagAlignmentLeft:
+            style.alignment = NSTextAlignmentLeft;
+            break;
+        case XWTagAlignmentCenter:
+            style.alignment = NSTextAlignmentCenter;
+            break;
+        case XWTagAlignmentRight:
+            style.alignment = NSTextAlignmentRight;
+            break;
+        default:
+            break;
+    }
+    
+    return style;
+    
+}
+
 
 @end

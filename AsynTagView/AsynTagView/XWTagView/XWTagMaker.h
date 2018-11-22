@@ -2,7 +2,7 @@
 //  XWTagMaker.h
 //  XWTagView
 //
-//  Created by serein on 2017/10/27.
+//  Created by 王剑石 on 2017/10/27.
 //  Copyright © 2017年 wangjianshi. All rights reserved.
 //
 
